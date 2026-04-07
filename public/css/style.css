@@ -1,0 +1,245 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: #2c3346;
+  color: #e2e8f0;
+  margin: 0;
+  padding: 0;
+}
+
+/* NAVBAR */
+.navbar {
+  padding: 15px 30px;
+}
+
+.custom-navbar {
+  background: rgba(23, 30, 49, 0.7);
+  border-bottom: 1px solid #1f2937;
+}
+
+.navbar .nav-link {
+  color: #9ca3af !important;
+}
+
+.navbar .nav-link:hover {
+  color: #4ade80 !important;
+}
+
+.navbar .navbar-brand {
+  color: #f0fdf4 !important;
+  font-weight: 600;
+}
+
+/* CONTAINER */
+.hero-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.hero-card {
+  display: flex;
+  gap: 40px;
+  background: #111827;
+  padding: 40px;
+  border: 1px solid #1f2937;
+  border-radius: 20px;
+  width: 85%;
+  max-width: 1100px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+/* LEFT SIDE */
+.hero-left {
+  flex: 1.2;
+}
+
+.hero-left h1 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #ecfdf5;
+}
+
+.hero-left p {
+  color: #9ca3af;
+  line-height: 1.7;
+}
+
+/* BUTTONS */
+.button-group {
+  margin-top: 25px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* PRIMARY BUTTON */
+.btn-contact {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-contact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+/* NAV BUTTON */
+.btn-contact-nav {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.btn-contact-nav:hover {
+  box-shadow: 0 5px 15px rgba(74, 222, 128, 0.3);
+}
+
+/* SECONDARY BUTTON */
+.btn-download {
+  color: linear-gradient(135deg, #3b82f6, #2563eb);
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+.btn-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+  color: #2563eb;
+}
+
+/* SOCIAL ICONS */
+.social-icons {
+  margin-top: 35px;
+  display: flex;
+  gap: 20px;
+}
+
+.social-icons a {
+  font-size: 24px;
+  color: #9ca3af;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  color: #4ade80;
+  transform: scale(1.2);
+}
+
+/* RIGHT SIDE */
+.hero-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* PROFILE CARD */
+.profile-card {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 330px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+}
+
+.profile-card img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+}
+
+/* PROFILE INFO */
+.profile-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-info h3 {
+  margin: 0;
+  font-weight: 700;
+  color: #ecfdf5;
+}
+
+.profile-info p {
+  margin: 5px 0 0;
+  color: #9ca3af;
+}
+
+/* CONTACT PAGE */
+.contact-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* FORM CARD */
+.contact-card {
+  background: #111827;
+  padding: 40px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 500px;
+  border: 1px solid #1f2937;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* TITLE */
+.contact-card h2 {
+  margin-bottom: 25px;
+  color: #f8fafc;
+}
+
+/* LABEL */
+.contact-card label {
+  font-weight: 600;
+  color: #cbd5f5;
+  margin-bottom: 5px;
+}
+
+/* INPUT & TEXTAREA */
+.contact-card .form-control,
+.contact-card .form-select {
+  background: #020617;
+  border: 1px solid #1e293b;
+  color: #e2e8f0;
+}
+
+.contact-card .form-control:focus,
+.contact-card .form-select:focus {
+  border-color: #3b82f6;
+  box-shadow: none;
+  background: #020617;
+  color: #e2e8f0;
+}
+
+/* BUTTON */
+.btn-submit {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 999px;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
