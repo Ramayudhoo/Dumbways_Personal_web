@@ -1,11 +1,11 @@
 <div class="contact-container">
-  <form class="contact-card" id="projectForm">
+  <form class="contact-card" name="projectForm" action="/project" method="post">
     <h1 class="mb-4">Add a Project</h1>
 
     <!-- Project Name -->
     <div class="mb-3">
-      <label for="Projectname" class="form-label fw-bold">Project Name</label>
-      <input type="text" class="form-control" id="Projectname" />
+      <label for="projectName" class="form-label fw-bold">Project Name</label>
+      <input type="text" class="form-control" name="projectName" />
     </div>
 
     <!-- Date -->
@@ -16,7 +16,7 @@
           placeholder="yyyy-mm-dd"
           type="date"
           class="form-control"
-          id="startDate"
+          name="startDate"
         />
       </div>
 
@@ -26,18 +26,18 @@
           type="date"
           class="form-control"
           placeholder="yyyy-mm-dd"
-          id="endDate"
+          name="endDate"
         />
       </div>
     </div>
 
-    <!-- Description -->
+    <!-- description -->
     <div class="mb-3">
-      <label for="Description" class="form-label fw-bold">Description</label>
+      <label for="description" class="form-label fw-bold">Description</label>
       <textarea
         placeholder="Description"
         class="form-control"
-        id="Description"
+        name="description"
         rows="3"
       ></textarea>
     </div>
@@ -47,22 +47,22 @@
       <label for="technologies" class="form-label fw-bold">Technologies Used</label>
       <div class="row mb-3">
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" id="tech1" />
+          <input class="form-check-input" type="checkbox" name="tech1" />
           <label class="form-check-label" for="tech1">Node.js</label>
         </div>
 
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" id="tech2" />
+          <input class="form-check-input" type="checkbox" name="tech2" />
           <label class="form-check-label" for="tech2">React.js</label>
         </div>
 
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" id="tech3" />
+          <input class="form-check-input" type="checkbox" name="tech3" />
           <label class="form-check-label" for="tech3">Next.js</label>
         </div>
 
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" id="tech4" />
+          <input class="form-check-input" type="checkbox" name="tech4" />
           <label class="form-check-label" for="tech4">TypeScript</label>
         </div>
       </div>
@@ -70,7 +70,7 @@
 
     <div class="mb-3">
       <label for="formFile" class="form-label fw-bolder">Upload Image</label>
-      <input class="form-control" type="file" id="formFile" />
+      <input class="form-control" type="file" name="formFile" />
     </div>
     <button type="submit" class="btn btn-dark">Submit</button>
   </form>
@@ -83,41 +83,40 @@
     <span class="input-group-text">
       <i class="bi bi-search"></i>
     </span>
-    <input
-      type="text"
-      class="form-control"
-      placeholder="Search project..."
-      oninput="filterProjects(this.value)"
-    />
+    <input type="text" class="form-control" placeholder="Search project..." />
   </div>
 </div>
 
-<div id="projectCards" class="row g-6"></div>
-<!-- Modal Detail Project -->
-<div class="modal fade" id="detailModal" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle"></h5>
-        <button
-          title="detailModal"
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
+<div class="row g-4 mt-3">
+  {{#if projects.length}}
+    {{#each projects}}
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3>{{this.projectName}}</h3>
+            <p>{{this.startDate}} → {{this.endDate}}</p>
+            <p>{{this.description}}</p>
+
+            <a href="/project/{{this.id}}" class="btn btn-info mb-2">Detail</a>
+            <a
+              href="/edit-project/{{this.id}}"
+              class="btn btn-success mb-2"
+            >Edit</a>
+            <a
+              href="/delete-project/{{this.id}}"
+              class="btn btn-danger mb-2"
+            >Delete</a>
+          </div>
+        </div>
       </div>
-      <div class="modal-body" id="modalBody"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
+    {{/each}}
+  {{else}}
+    <p class="text-center">No projects found</p>
+  {{/if}}
 </div>
 
 <!-- EDIT MODAL -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" name="editModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -130,43 +129,43 @@
       </div>
 
       <div class="modal-body">
-        <input type="hidden" id="editIndex" />
+        <input type="hidden" name="editIndex" />
 
         <div class="mb-3">
           <label class="form-label">Project Name</label>
-          <input type="text" id="editProjectName" class="form-control" />
+          <input type="text" name="editprojectName" class="form-control" />
         </div>
 
         <div class="mb-3">
-          <label class="form-label">Description</label>
-          <textarea id="editDescription" class="form-control"></textarea>
+          <label class="form-label">description</label>
+          <textarea name="editdescription" class="form-control"></textarea>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Start Date</label>
-          <input type="date" id="editStartDate" class="form-control" />
+          <input type="date" name="editStartDate" class="form-control" />
         </div>
 
         <div class="mb-3">
           <label class="form-label">End Date</label>
-          <input type="date" id="editEndDate" class="form-control" />
+          <input type="date" name="editEndDate" class="form-control" />
         </div>
 
         <div class="mb-3">
           <label class="form-label">Technologies</label><br />
-          <label><input type="checkbox" id="editTech1" value="Node.js" />
+          <label><input type="checkbox" name="editTech1" value="Node.js" />
             Node.js</label><br />
-          <label><input type="checkbox" id="editTech2" value="React.js" />
+          <label><input type="checkbox" name="editTech2" value="React.js" />
             React.js</label><br />
-          <label><input type="checkbox" id="editTech3" value="Next.js" />
+          <label><input type="checkbox" name="editTech3" value="Next.js" />
             Next.js</label><br />
-          <label><input type="checkbox" id="editTech4" value="TypeScript" />
+          <label><input type="checkbox" name="editTech4" value="TypeScript" />
             TypeScript</label>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Image (optional)</label>
-          <input type="file" id="editImage" class="form-control" />
+          <input type="file" name="editImage" class="form-control" />
         </div>
       </div>
 
