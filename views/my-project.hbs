@@ -1,3 +1,10 @@
+{{#if success}}
+  <div class="alert alert-success">{{success}}</div>
+{{/if}}
+
+{{#if error}}
+  <div class="alert alert-danger">{{error}}</div>
+{{/if}}
 <div class="contact-container">
   <form class="contact-card" name="projectForm" action="/project" method="post">
     <h1 class="mb-4">Add a Project</h1>
@@ -47,23 +54,63 @@
       <label for="technologies" class="form-label fw-bold">Technologies Used</label>
       <div class="row mb-3">
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" name="tech1" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="technologies"
+            value="1"
+          />
           <label class="form-check-label" for="tech1">Node.js</label>
         </div>
 
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" name="tech2" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="technologies"
+            value="2"
+          />
           <label class="form-check-label" for="tech2">React.js</label>
         </div>
 
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" name="tech3" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="technologies"
+            value="3"
+          />
           <label class="form-check-label" for="tech3">Next.js</label>
         </div>
 
         <div class="form-check col-md-6 mb-2">
-          <input class="form-check-input" type="checkbox" name="tech4" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="technologies"
+            value="4"
+          />
           <label class="form-check-label" for="tech4">TypeScript</label>
+        </div>
+
+        <div class="form-check col-md-6 mb-2">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="technologies"
+            value="5"
+          />
+          <label class="form-check-label" for="tech5">Vue.js</label>
+        </div>
+
+        <div class="form-check col-md-6 mb-2">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="technologies"
+            value="6"
+          />
+          <label class="form-check-label" for="tech6">Laravel</label>
         </div>
       </div>
     </div>
@@ -93,19 +140,38 @@
       <div class="col-md-4">
         <div class="card h-100">
           <div class="card-body">
-            <h3>{{this.projectName}}</h3>
-            <p>{{this.startDate}} → {{this.endDate}}</p>
+
+            <h3>{{this.project_name}}</h3>
+
+            <p>
+              {{this.start_date}}
+              →
+              {{this.end_date}}
+            </p>
+
             <p>{{this.description}}</p>
 
-            <a href="/project/{{this.id}}" class="btn btn-info mb-2">Detail</a>
-            <a
+            <!-- TECHNOLOGIES -->
+            <div class="mb-2">
+              {{#each this.technologies}}
+                <span class="badge bg-dark me-1">{{this}}</span>
+              {{/each}}
+            </div>
+            <button
+              class="btn btn-success mb-2"
+              onclick="openEditModal({{this.id}}, '{{this.project_name}}', '{{this.description}}', '{{this.start_date}}', '{{this.end_date}}')"
+            >
+              Edit
+            </button>
+            {{!-- <a
               href="/edit-project/{{this.id}}"
               class="btn btn-success mb-2"
-            >Edit</a>
+            >Edit</a> --}}
             <a
               href="/delete-project/{{this.id}}"
               class="btn btn-danger mb-2"
             >Delete</a>
+
           </div>
         </div>
       </div>
@@ -116,7 +182,13 @@
 </div>
 
 <!-- EDIT MODAL -->
-<div class="modal fade" name="editModal" tabindex="-1" aria-hidden="true">
+<div
+  class="modal fade"
+  name="editModal"
+  id="editModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -129,38 +201,92 @@
       </div>
 
       <div class="modal-body">
-        <input type="hidden" name="editIndex" />
+        <input type="hidden" name="editIndex" id="editId" />
 
         <div class="mb-3">
           <label class="form-label">Project Name</label>
-          <input type="text" name="editprojectName" class="form-control" />
+          <input
+            type="text"
+            id="editProjectName"
+            name="editprojectName"
+            class="form-control"
+          />
         </div>
 
         <div class="mb-3">
           <label class="form-label">description</label>
-          <textarea name="editdescription" class="form-control"></textarea>
+          <textarea
+            name="editdescription"
+            id="editDescription"
+            class="form-control"
+          ></textarea>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Start Date</label>
-          <input type="date" name="editStartDate" class="form-control" />
+          <input
+            type="date"
+            id="editStartDate"
+            name="editStartDate"
+            class="form-control"
+          />
         </div>
 
         <div class="mb-3">
           <label class="form-label">End Date</label>
-          <input type="date" name="editEndDate" class="form-control" />
+          <input
+            type="date"
+            id="editEndDate"
+            name="editEndDate"
+            class="form-control"
+          />
         </div>
 
         <div class="mb-3">
           <label class="form-label">Technologies</label><br />
-          <label><input type="checkbox" name="editTech1" value="Node.js" />
+          <label>
+            <input
+              type="checkbox"
+              id="editTech1"
+              name="technologies"
+              value="1"
+            />
             Node.js</label><br />
-          <label><input type="checkbox" name="editTech2" value="React.js" />
+          <label><input
+              type="checkbox"
+              id="editTech2"
+              name="technologies"
+              value="2"
+            />
             React.js</label><br />
-          <label><input type="checkbox" name="editTech3" value="Next.js" />
+          <label><input
+              type="checkbox"
+              id="editTech3"
+              name="technologies"
+              value="3"
+            />
             Next.js</label><br />
-          <label><input type="checkbox" name="editTech4" value="TypeScript" />
-            TypeScript</label>
+          <label><input
+              type="checkbox"
+              id="editTech4"
+              name="technologies"
+              value="4"
+            />
+            TypeScript</label><br />
+          <label><input
+              type="checkbox"
+              id="editTech5"
+              name="technologies"
+              value="5"
+            />
+            vue.js</label><br />
+          <label><input
+              type="checkbox"
+              id="editTech6"
+              name="technologies"
+              value="6"
+            />
+            Laravel</label>
         </div>
 
         <div class="mb-3">
@@ -173,7 +299,7 @@
         <button class="btn btn-secondary" data-bs-dismiss="modal">
           Cancel
         </button>
-        <button class="btn btn-success" onclick="saveEdit()">Save</button>
+        <button class="btn btn-success" onclick="submitEdit()">Save</button>
       </div>
     </div>
   </div>
