@@ -1,9 +1,8 @@
 {{#if success}}
-  <div class="alert alert-success">{{success}}</div>
+  <div class="alert alert-success alert-dismissible auto-dismiss">{{success}}</div>
 {{/if}}
-
 {{#if error}}
-  <div class="alert alert-danger">{{error}}</div>
+  <div class="alert alert-danger alert-dismissible auto-dismiss">{{error}}</div>
 {{/if}}
 <div class="contact-container">
   <form class="contact-card" name="projectForm" action="/project" method="post">
@@ -140,15 +139,8 @@
       <div class="col-md-4">
         <div class="card h-100">
           <div class="card-body">
-
             <h3>{{this.project_name}}</h3>
-
-            <p>
-              {{this.start_date}}
-              →
-              {{this.end_date}}
-            </p>
-
+            <p>{{this.start_date}} → {{this.end_date}}</p>
             <p>{{this.description}}</p>
 
             <!-- TECHNOLOGIES -->
@@ -157,20 +149,21 @@
                 <span class="badge bg-dark me-1">{{this}}</span>
               {{/each}}
             </div>
-            <button
-              class="btn btn-success mb-2"
-              onclick="openEditModal({{this.id}}, '{{this.project_name}}', '{{this.description}}', '{{this.start_date}}', '{{this.end_date}}')"
-            >
-              Edit
-            </button>
-            {{!-- <a
-              href="/edit-project/{{this.id}}"
-              class="btn btn-success mb-2"
-            >Edit</a> --}}
-            <a
-              href="/delete-project/{{this.id}}"
-              class="btn btn-danger mb-2"
-            >Delete</a>
+
+            {{#if ../user}}
+              {{#if (eq this.user_id ../user.id)}}
+                <button
+                  class="btn btn-success mb-2 btn-edit"
+                  data-id="{{this.id}}"
+                  data-name="{{this.project_name}}"
+                  data-description="{{this.description}}"
+                  data-start="{{this.start_date}}"
+                  data-end="{{this.end_date}}"
+                  data-technologies="{{this.technologies}}"
+                >Edit</button>
+                <a href="/delete-project/{{this.id}}" class="btn btn-danger mb-2">Delete</a>
+              {{/if}}
+            {{/if}}
 
           </div>
         </div>
@@ -304,3 +297,12 @@
     </div>
   </div>
 </div>
+<script>
+  document.querySelectorAll(".auto-dismiss").forEach((el) => {
+    setTimeout(() => {
+      el.classList.add("hide");
+      setTimeout(() => el.remove(), 800); // tunggu animasi selesai baru hapus
+    }, 2500); // 
+  });
+</script>
+<script src="/js/project.js"></script>

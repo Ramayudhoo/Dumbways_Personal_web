@@ -22,14 +22,40 @@
           <a class="nav-link" href="/project">My Projects</a>
         </li>
       </ul>
-      <a href="/contact">
-        <button
-          class="btn btn-contact-nav d-flex justify-content-end"
-          type="button"
-        >
-          Contact Me
-        </button>
-      </a>
+
+      <div class="d-flex align-items-center gap-2">
+        <a href="/contact">
+          <button class="btn btn-contact-nav" type="button">Contact Me</button>
+        </a>
+
+        {{#if user}}
+          <!-- Sudah login → tampilkan dropdown profil -->
+          <div class="dropdown">
+            <button
+              class="btn btn-outline-light dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              👤
+              {{user.name}}
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><span
+                  class="dropdown-item text-muted"
+                >{{user.email}}</span></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a
+                  class="dropdown-item text-danger"
+                  href="/logout"
+                >Logout</a></li>
+            </ul>
+          </div>
+        {{else}}
+          <!-- Belum login → tampilkan tombol login -->
+          <a href="/login" class="btn btn-outline-light">Login</a>
+        {{/if}}
+      </div>
+
     </div>
   </div>
 </nav>
