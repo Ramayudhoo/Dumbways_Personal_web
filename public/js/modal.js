@@ -1,21 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".btn-edit").forEach((btn) => {
     btn.addEventListener("click", () => {
-      // ambil data dari attribute
       const id = btn.dataset.id;
       const name = btn.dataset.name;
       const description = btn.dataset.description;
       const start = btn.dataset.start;
       const end = btn.dataset.end;
+      const image = btn.dataset.image;
 
-      // technologies dari HBS jadi string "Node.js,React.js"
       const techString = btn.dataset.technologies || "";
       const techList = techString
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean);
 
-      // isi form modal
       document.getElementById("editId").value = id;
       document.getElementById("editProjectName").value = name;
       document.getElementById("editDescription").value = description;
@@ -26,12 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
         .toISOString()
         .split("T")[0];
 
-      // reset semua checkbox
-      for (let i = 1; i <= 6; i++) {
-        document.getElementById(`editTech${i}`).checked = false;
+      // set form action
+      document.getElementById("editForm").action = `/edit-project/${id}`;
+
+      // preview image lama
+      const preview = document.getElementById("currentImagePreview");
+      if (image) {
+        preview.innerHTML = `<img src="${image}" style="height:100px; object-fit:cover; border-radius:6px;" /> <small class="text-muted d-block mt-1">Image saat ini</small>`;
+      } else {
+        preview.innerHTML = `<small class="text-muted">Belum ada image</small>`;
       }
 
-      // map nama tech ke id checkbox
+      // reset checkbox
       const techMap = {
         "Node.js": "editTech1",
         "React.js": "editTech2",
@@ -40,7 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "Vue.js": "editTech5",
         Laravel: "editTech6",
       };
-
+      Object.values(techMap).forEach((id) => {
+        document.getElementById(id).checked = false;
+      });
       techList.forEach((techName) => {
         const cbId = techMap[techName];
         if (cbId) document.getElementById(cbId).checked = true;
@@ -51,46 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-async function submitEdit() {
-  const id = document.getElementById("editId").value;
+function submitEdit() {
+  const form = document.getElementById("editForm");
 
-  const techs = [];
-  for (let i = 1; i <= 6; i++) {
-    if (document.getElementById(`editTech${i}`).checked) {
-      techs.push(i);
-    }
+  // validasi
+  const projectName = document.getElementById("editProjectName").value.trim();
+  const description = document.getElementById("editDescription").value.trim();
+  const startDate = document.getElementById("editStartDate").value;
+  const endDate = document.getElementById("editEndDate").value;
+
+  if (!projectName || !description || !startDate || !endDate) {
+    alert("Semua field wajib diisi");
+    return;
   }
 
-  // buat form dinamis lalu submit
-  const form = document.createElement("form");
-  form.method = "POST";
-  form.action = `/edit-project/${id}`;
-
-  const fields = {
-    projectName: document.getElementById("editProjectName").value,
-    description: document.getElementById("editDescription").value,
-    startDate: document.getElementById("editStartDate").value,
-    endDate: document.getElementById("editEndDate").value,
-  };
-
-  // tambah field biasa
-  for (const [key, val] of Object.entries(fields)) {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = key;
-    input.value = val;
-    form.appendChild(input);
-  }
-
-  // tambah technologies
-  techs.forEach((t) => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "technologies";
-    input.value = t;
-    form.appendChild(input);
-  });
-
-  document.body.appendChild(form);
   form.submit();
 }

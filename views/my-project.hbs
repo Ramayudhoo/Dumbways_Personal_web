@@ -1,134 +1,79 @@
 {{#if success}}
-  <div class="alert alert-success alert-dismissible auto-dismiss">{{success}}</div>
+  <div class="alert alert-success auto-dismiss">{{success}}</div>
 {{/if}}
 {{#if error}}
-  <div class="alert alert-danger alert-dismissible auto-dismiss">{{error}}</div>
+  <div class="alert alert-danger auto-dismiss">{{error}}</div>
 {{/if}}
+
 <div class="contact-container">
-  <form class="contact-card" name="projectForm" action="/project" method="post">
+  <form class="contact-card" name="projectForm" action="/project" method="post" enctype="multipart/form-data">
     <h1 class="mb-4">Add a Project</h1>
 
-    <!-- Project Name -->
     <div class="mb-3">
-      <label for="projectName" class="form-label fw-bold">Project Name</label>
+      <label class="form-label fw-bold">Project Name</label>
       <input type="text" class="form-control" name="projectName" />
     </div>
 
-    <!-- Date -->
     <div class="row mb-3">
       <div class="col-md-6">
         <label class="form-label fw-bold">Start Date</label>
-        <input
-          placeholder="yyyy-mm-dd"
-          type="date"
-          class="form-control"
-          name="startDate"
-        />
+        <input type="date" class="form-control" name="startDate" />
       </div>
-
       <div class="col-md-6">
         <label class="form-label fw-bold">End Date</label>
-        <input
-          type="date"
-          class="form-control"
-          placeholder="yyyy-mm-dd"
-          name="endDate"
-        />
+        <input type="date" class="form-control" name="endDate" />
       </div>
     </div>
 
-    <!-- description -->
     <div class="mb-3">
-      <label for="description" class="form-label fw-bold">Description</label>
-      <textarea
-        placeholder="Description"
-        class="form-control"
-        name="description"
-        rows="3"
-      ></textarea>
+      <label class="form-label fw-bold">Description</label>
+      <textarea class="form-control" name="description" rows="3"></textarea>
     </div>
 
-    <!-- Checkbox -->
     <div class="mb-3">
-      <label for="technologies" class="form-label fw-bold">Technologies Used</label>
+      <label class="form-label fw-bold">Technologies Used</label>
       <div class="row mb-3">
         <div class="form-check col-md-6 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="technologies"
-            value="1"
-          />
-          <label class="form-check-label" for="tech1">Node.js</label>
+          <input class="form-check-input" type="checkbox" name="technologies" value="1" />
+          <label class="form-check-label">Node.js</label>
         </div>
-
         <div class="form-check col-md-6 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="technologies"
-            value="2"
-          />
-          <label class="form-check-label" for="tech2">React.js</label>
+          <input class="form-check-input" type="checkbox" name="technologies" value="2" />
+          <label class="form-check-label">React.js</label>
         </div>
-
         <div class="form-check col-md-6 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="technologies"
-            value="3"
-          />
-          <label class="form-check-label" for="tech3">Next.js</label>
+          <input class="form-check-input" type="checkbox" name="technologies" value="3" />
+          <label class="form-check-label">Next.js</label>
         </div>
-
         <div class="form-check col-md-6 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="technologies"
-            value="4"
-          />
-          <label class="form-check-label" for="tech4">TypeScript</label>
+          <input class="form-check-input" type="checkbox" name="technologies" value="4" />
+          <label class="form-check-label">TypeScript</label>
         </div>
-
         <div class="form-check col-md-6 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="technologies"
-            value="5"
-          />
-          <label class="form-check-label" for="tech5">Vue.js</label>
+          <input class="form-check-input" type="checkbox" name="technologies" value="5" />
+          <label class="form-check-label">Vue.js</label>
         </div>
-
         <div class="form-check col-md-6 mb-2">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            name="technologies"
-            value="6"
-          />
-          <label class="form-check-label" for="tech6">Laravel</label>
+          <input class="form-check-input" type="checkbox" name="technologies" value="6" />
+          <label class="form-check-label">Laravel</label>
         </div>
       </div>
     </div>
 
     <div class="mb-3">
-      <label for="formFile" class="form-label fw-bolder">Upload Image</label>
-      <input class="form-control" type="file" name="formFile" />
+      <label class="form-label fw-bold">Upload Image <small class="text-muted">(JPG/PNG/WEBP, max 2MB)</small></label>
+      <input class="form-control" type="file" name="image" accept="image/*" />
     </div>
+
     <button type="submit" class="btn btn-dark">Submit</button>
   </form>
 </div>
+
 <!-- card myproject -->
 <div class="container mt-5 mb-3">
   <h2 class="mb-2">My Projects</h2>
-
   <div class="input-group w-50 mt-2">
-    <span class="input-group-text">
-      <i class="bi bi-search"></i>
-    </span>
+    <span class="input-group-text"><i class="bi bi-search"></i></span>
     <input type="text" class="form-control" placeholder="Search project..." />
   </div>
 </div>
@@ -138,12 +83,20 @@
     {{#each projects}}
       <div class="col-md-4">
         <div class="card h-100">
+
+          {{#if this.image}}
+            <img src="{{this.image}}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="project image" />
+          {{else}}
+            <div class="bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+              <span class="text-white">No Image</span>
+            </div>
+          {{/if}}
+
           <div class="card-body">
             <h3>{{this.project_name}}</h3>
             <p>{{this.start_date}} → {{this.end_date}}</p>
             <p>{{this.description}}</p>
 
-            <!-- TECHNOLOGIES -->
             <div class="mb-2">
               {{#each this.technologies}}
                 <span class="badge bg-dark me-1">{{this}}</span>
@@ -160,11 +113,11 @@
                   data-start="{{this.start_date}}"
                   data-end="{{this.end_date}}"
                   data-technologies="{{this.technologies}}"
+                  data-image="{{this.image}}"
                 >Edit</button>
                 <a href="/delete-project/{{this.id}}" class="btn btn-danger mb-2">Delete</a>
               {{/if}}
             {{/if}}
-
           </div>
         </div>
       </div>
@@ -175,134 +128,66 @@
 </div>
 
 <!-- EDIT MODAL -->
-<div
-  class="modal fade"
-  name="editModal"
-  id="editModal"
-  tabindex="-1"
-  aria-hidden="true"
->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Edit Project</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
       <div class="modal-body">
-        <input type="hidden" name="editIndex" id="editId" />
+        <form id="editForm" method="POST" enctype="multipart/form-data">
+          <input type="hidden" id="editId" />
 
-        <div class="mb-3">
-          <label class="form-label">Project Name</label>
-          <input
-            type="text"
-            id="editProjectName"
-            name="editprojectName"
-            class="form-control"
-          />
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Project Name</label>
+            <input type="text" id="editProjectName" name="projectName" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea id="editDescription" name="description" class="form-control"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Start Date</label>
+            <input type="date" id="editStartDate" name="startDate" class="form-control" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">End Date</label>
+            <input type="date" id="editEndDate" name="endDate" class="form-control" />
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">description</label>
-          <textarea
-            name="editdescription"
-            id="editDescription"
-            class="form-control"
-          ></textarea>
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Technologies</label><br />
+            <label><input type="checkbox" id="editTech1" name="technologies" value="1" /> Node.js</label><br />
+            <label><input type="checkbox" id="editTech2" name="technologies" value="2" /> React.js</label><br />
+            <label><input type="checkbox" id="editTech3" name="technologies" value="3" /> Next.js</label><br />
+            <label><input type="checkbox" id="editTech4" name="technologies" value="4" /> TypeScript</label><br />
+            <label><input type="checkbox" id="editTech5" name="technologies" value="5" /> Vue.js</label><br />
+            <label><input type="checkbox" id="editTech6" name="technologies" value="6" /> Laravel</label>
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">Start Date</label>
-          <input
-            type="date"
-            id="editStartDate"
-            name="editStartDate"
-            class="form-control"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">End Date</label>
-          <input
-            type="date"
-            id="editEndDate"
-            name="editEndDate"
-            class="form-control"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Technologies</label><br />
-          <label>
-            <input
-              type="checkbox"
-              id="editTech1"
-              name="technologies"
-              value="1"
-            />
-            Node.js</label><br />
-          <label><input
-              type="checkbox"
-              id="editTech2"
-              name="technologies"
-              value="2"
-            />
-            React.js</label><br />
-          <label><input
-              type="checkbox"
-              id="editTech3"
-              name="technologies"
-              value="3"
-            />
-            Next.js</label><br />
-          <label><input
-              type="checkbox"
-              id="editTech4"
-              name="technologies"
-              value="4"
-            />
-            TypeScript</label><br />
-          <label><input
-              type="checkbox"
-              id="editTech5"
-              name="technologies"
-              value="5"
-            />
-            vue.js</label><br />
-          <label><input
-              type="checkbox"
-              id="editTech6"
-              name="technologies"
-              value="6"
-            />
-            Laravel</label>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Image (optional)</label>
-          <input type="file" name="editImage" class="form-control" />
-        </div>
+          <div class="mb-3">
+            <label class="form-label">Image <small class="text-muted">(kosongkan jika tidak ingin mengubah)</small></label>
+            <div id="currentImagePreview" class="mb-2"></div>
+            <input type="file" id="editImage" name="image" class="form-control" accept="image/*" />
+          </div>
+        </form>
       </div>
-
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
-        </button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button class="btn btn-success" onclick="submitEdit()">Save</button>
       </div>
     </div>
   </div>
 </div>
+
+<script src="/js/modal.js"></script>
 <script>
   document.querySelectorAll(".auto-dismiss").forEach((el) => {
     setTimeout(() => {
-      el.classList.add("hide");
-      setTimeout(() => el.remove(), 800); // tunggu animasi selesai baru hapus
-    }, 2500); // 
+      el.style.transition = "opacity 0.8s";
+      el.style.opacity = "0";
+      setTimeout(() => el.remove(), 800);
+    }, 3000);
   });
 </script>
-<script src="/js/project.js"></script>
